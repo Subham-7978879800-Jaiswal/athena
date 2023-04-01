@@ -1,0 +1,35 @@
+.flex-grow-1 {
+    flex-grow: 1;
+}
+
+.button-container {
+    padding-top: 16px !important;
+    padding-left: 16px !important;
+    display: flex;
+    justify-content: center;
+}
+
+.header-style {
+    margin-left: 24px;
+    margin-bottom: 24px;
+}
+
+.margin-left-24 {
+    margin-left: 24px;
+}
+
+.divider-style {
+    height: 2;
+    margin-top: 12px;
+    margin-bottom: 12px;
+}
+
+.button-text {
+    text-transform: capitalize;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.MuiAutocomplete-hasPopupIcon.css-l3ln04-MuiAutocomplete-root .MuiOutlinedInput-root {
+    padding: 0 !important;
+}

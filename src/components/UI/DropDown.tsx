@@ -9,10 +9,11 @@ interface DropDownPropsType {
   changeHandler: (event: any) => void;
   fieldLabel: string;
   fieldName: string;
+  value: string;
 }
 
 export default function DropDown(props: DropDownPropsType) {
-  const { options, fieldLabel, changeHandler, fieldName } = props;
+  const { options, fieldLabel, changeHandler, fieldName, value } = props;
 
   const handleChange = (event: any) => {
     const { value } = event.target;
@@ -25,7 +26,12 @@ export default function DropDown(props: DropDownPropsType) {
         {fieldLabel}
       </Typography>
       <FormControl fullWidth>
-        <Select id="simple-select" onChange={handleChange}>
+        <Select
+          sx={{ height: "40px" }}
+          id="simple-select"
+          onChange={handleChange}
+          value={value}
+        >
           {options.map((option, index) => (
             <MenuItem key={index} value={option.value}>
               {option.label}
