@@ -1,10 +1,12 @@
-import { useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
 import TextField from "@mui/material/TextField";
-import { Typography, Box } from "@mui/material";
+import { Typography, Box, InputAdornment, IconButton } from "@mui/material";
+import { Search } from "@mui/icons-material";
 import Autocomplete from "@mui/material/Autocomplete";
 
 import "./DropDownWithClear.css";
+import { useStore } from "../../../context/store";
 
 interface DropDownWithClearPropsType {
   dropdownOptions: any[];
@@ -12,6 +14,7 @@ interface DropDownWithClearPropsType {
   fieldLabel: string;
   fieldName: string;
   value: string;
+  clostButtonReq?: Boolean;
 }
 
 function DropDownWithClear(props: DropDownWithClearPropsType) {
@@ -20,11 +23,15 @@ function DropDownWithClear(props: DropDownWithClearPropsType) {
     fieldLabel,
     changeHandler,
     fieldName,
-    value = "",
+    value,
+    clostButtonReq = false,
   } = props;
+
+  const { providerSearchFilter } = useStore();
 
   const [open, setOpen] = useState(false);
   const [filter, setFilter] = useState("");
+  const autocompleteRef = useRef<any>(null);
 
   const sb = { label: "Search" };
 
@@ -32,25 +39,40 @@ function DropDownWithClear(props: DropDownWithClearPropsType) {
 
   const handleOptionClick = (event: any) => {
     const value = event.target.value;
+
     changeHandler({ [fieldName]: value });
   };
 
   const closeBlurHandler = () => {
     if (closingTimeout) clearTimeout(closingTimeout);
+    setFilter("");
     closingTimeout = setTimeout(() => {
-      setFilter("");
       setOpen(false);
     }, 100);
   };
 
+  const handleClear = () => {
+    const doc: any = document?.getElementById(`${fieldName}`) as any;
+    doc.value = "";
+  };
+
+  useEffect(() => {
+    if (value === "") handleClear();
+  });
+
   return (
-    <Box sx={{ display: "relative" }}>
+    <Box sx={{ position: "relative" }}>
       <Typography sx={{ fontSize: "12px" }} align="left">
         {fieldLabel}
       </Typography>
+
       <Autocomplete
+        filterOptions={(options) => options}
         id={fieldName}
-        open={true}
+        disableClearable={!clostButtonReq ? true : false}
+        openOnFocus
+        open={open}
+        clearOnEscape={true}
         onOpen={() => {
           setOpen(true);
         }}
@@ -58,17 +80,28 @@ function DropDownWithClear(props: DropDownWithClearPropsType) {
         onClose={closeBlurHandler}
         onBlur={closeBlurHandler}
         disablePortal
+        isOptionEqualToValue={() => true}
         options={[
           sb,
           ...dropdownOptions.filter((option) => {
             return option.label.toLowerCase().includes(filter.toLowerCase());
           }),
         ]}
-        getOptionLabel={(option) => {
+        getOptionLabel={(option: any) => {
           return option.label || "";
         }}
-        renderInput={(params) => <TextField value={value} {...params} />}
-        renderOption={(props, option: any) => {
+        renderInput={(params) => {
+          const InputProps = { ...params.InputProps };
+
+          return (
+            <TextField
+              value={props.value}
+              {...params}
+              InputProps={InputProps}
+            />
+          );
+        }}
+        renderOption={(props: any, option: any) => {
           if (option?.label === "Search") {
             return (
               <>
@@ -85,11 +118,13 @@ function DropDownWithClear(props: DropDownWithClearPropsType) {
         }}
       />
       <TextField
+        value={filter}
+        color="primary"
         sx={{
-          display: true ? "block" : "none",
+          display: open ? "block" : "none",
           position: "absolute",
           zIndex: 100000,
-          width: "264px",
+          width: "100%",
           backgroundColor: "white",
         }}
         onClick={() => {
@@ -100,10 +135,19 @@ function DropDownWithClear(props: DropDownWithClearPropsType) {
         onChange={(event: any) => {
           setFilter(event.target.value);
         }}
-        label="Search"
         variant="outlined"
         size="small"
         fullWidth
+        InputProps={{
+          startAdornment: (
+            <InputAdornment position="start">
+              <IconButton color="primary">
+                <Search />
+              </IconButton>
+            </InputAdornment>
+          ),
+          notched: false,
+        }}
       />
     </Box>
   );

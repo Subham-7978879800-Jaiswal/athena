@@ -1,10 +1,9 @@
-import { useState } from "react";
+import { useCallback, useState, useMemo } from "react";
 
 import { Box, Button, Grid, Typography } from "@mui/material";
 import Divider from "@mui/material/Divider";
 
 import DropdownWithClear from "../UI/DropDownWithClear/DropDownWithClear";
-import Dropdown from "../UI/DropDown";
 import Tag from "../UI/Tag";
 
 import "./providerSearch.css";
@@ -35,32 +34,34 @@ const FilterSelector = ({ changeHandler }: any) => {
 };
 
 function ProviderSearch() {
-  const options = [
-    { label: "Amadeus", value: 1984 },
-    { label: "Mockingbird", value: 1962 },
-    { label: "Toy Story", value: 2010 },
-    { label: "Logan", value: 2017 },
-    { label: "Full Metal", value: 1987 },
-    { label: "Dangal", value: 2016 },
-    { label: "The Sting", value: 1973 },
-    { label: "2001: A Space", value: 1968 },
-    { label: "Singin' in", value: 1952 },
-    { label: "Bicycle", value: 1948 },
-    { label: "The Kid", value: 1921 },
-    { label: "Inglourious", value: 2009 },
-    { label: "Snatch", value: 2000 },
-    { label: "3 Idiots", value: 2009 },
-    { label: "Monty Python", value: 1975 },
-  ];
-  const dropdownOptions = options;
+  const options = useMemo(() => {
+    return [
+      { label: "Amadeus", value: 1984 },
+      { label: "Mockingbird", value: 1962 },
+      { label: "Toy Story", value: 2010 },
+      { label: "Logan", value: 2017 },
+      { label: "Full Metal", value: 1987 },
+      { label: "Dangal", value: 2016 },
+      { label: "The Sting", value: 1973 },
+      { label: "2001: A Space", value: 1968 },
+      { label: "Singin' in", value: 1952 },
+      { label: "Bicycle", value: 1948 },
+      { label: "The Kid", value: 1921 },
+      { label: "Inglourious", value: 2009 },
+      { label: "Snatch", value: 2000 },
+      { label: "3 Idiots", value: 2009 },
+      { label: "Monty Python", value: 1975 },
+    ];
+  }, []);
+  const DropdownWithClearOptions = options;
 
   const [showMoreFilter, setShowMoreFilter] = useState(false);
 
   const { updateProviderSearchFilter, providerSearchFilter } = useStore();
 
-  const changeHandler = (data: Object[]) => {
+  const changeHandler = useCallback((data: Object[]) => {
     updateProviderSearchFilter(data);
-  };
+  }, []);
   return (
     <>
       <h2 className="header-style">Find a Provider</h2>
@@ -78,7 +79,8 @@ function ProviderSearch() {
             <Grid item md={3} xs={6}>
               <DropdownWithClear
                 fieldLabel={"Distance From member"}
-                dropdownOptions={dropdownOptions}
+                clostButtonReq={true}
+                dropdownOptions={options}
                 changeHandler={changeHandler}
                 fieldName={"distanceFromMember"}
                 value={providerSearchFilter.distanceFromMember}
@@ -86,37 +88,38 @@ function ProviderSearch() {
             </Grid>
             <Grid item md={3} xs={6}>
               <DropdownWithClear
+                clostButtonReq={true}
                 fieldLabel={"Speciality"}
-                dropdownOptions={dropdownOptions}
+                dropdownOptions={options}
                 changeHandler={changeHandler}
                 fieldName={"speciality"}
                 value={providerSearchFilter.speciality}
               ></DropdownWithClear>
             </Grid>
             <Grid item md={3} xs={6}>
-              <Dropdown
+              <DropdownWithClear
                 fieldLabel={"Sub-Speciality"}
-                options={options}
+                dropdownOptions={options}
                 changeHandler={changeHandler}
                 fieldName={"subSpeciality"}
                 value={providerSearchFilter.subSpeciality}
-              ></Dropdown>
+              ></DropdownWithClear>
             </Grid>
             <Grid item md={3} xs={6}>
-              <Dropdown
+              <DropdownWithClear
                 fieldLabel={"Procedure Category"}
-                options={options}
+                dropdownOptions={options}
                 changeHandler={changeHandler}
                 fieldName={"procedureCategory"}
                 value={providerSearchFilter.procedureCategory}
-              ></Dropdown>
+              ></DropdownWithClear>
             </Grid>
             {showMoreFilter && (
               <>
                 <Grid className="flex-grow-1" item>
                   <DropdownWithClear
                     fieldLabel={"Conditions Addressed"}
-                    dropdownOptions={dropdownOptions}
+                    dropdownOptions={options}
                     changeHandler={changeHandler}
                     fieldName={"conditionsAddressed"}
                     value={providerSearchFilter.conditionsAddressed}
@@ -125,38 +128,38 @@ function ProviderSearch() {
                 <Grid className="flex-grow-1" item>
                   <DropdownWithClear
                     fieldLabel={"Facility Type"}
-                    dropdownOptions={dropdownOptions}
+                    dropdownOptions={options}
                     changeHandler={changeHandler}
                     fieldName={"facilityType"}
                     value={providerSearchFilter.facilityType}
                   ></DropdownWithClear>
                 </Grid>
                 <Grid className="flex-grow-1" item>
-                  <Dropdown
+                  <DropdownWithClear
                     fieldLabel={"Preferred Gender"}
-                    options={options}
+                    dropdownOptions={options}
                     changeHandler={changeHandler}
                     fieldName={"preferredGender"}
                     value={providerSearchFilter.preferredGender}
-                  ></Dropdown>
+                  ></DropdownWithClear>
                 </Grid>
                 <Grid className="flex-grow-1" item>
-                  <Dropdown
+                  <DropdownWithClear
                     fieldLabel={"Languages Spoken"}
-                    options={options}
+                    dropdownOptions={options}
                     changeHandler={changeHandler}
                     fieldName={"languagesSpoken"}
                     value={providerSearchFilter.languagesSpoken}
-                  ></Dropdown>
+                  ></DropdownWithClear>
                 </Grid>
                 <Grid className="flex-grow-1" item>
-                  <Dropdown
+                  <DropdownWithClear
                     fieldLabel={"Provider Type"}
-                    options={options}
+                    dropdownOptions={options}
                     changeHandler={changeHandler}
                     fieldName={"providerType"}
                     value={providerSearchFilter.providerType}
-                  ></Dropdown>
+                  ></DropdownWithClear>
                 </Grid>
               </>
             )}
