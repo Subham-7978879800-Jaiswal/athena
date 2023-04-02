@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Typography, TextField, Button, Switch, Grid } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import SendIcon from "@mui/icons-material/Send";
+import ProviderDetailCard from "./ProviderDetailCard";
 
 function ProviderSelectionDetail() {
   const [results, setResults] = useState<number>(258);
@@ -72,6 +73,21 @@ function ProviderSelectionDetail() {
       <Typography variant="subtitle1" marginTop={3}>
         Select one or multiple Providers to send to the Customer
       </Typography>
+      <ProviderDetailCard
+        name={"Catherine Jones"}
+        text1={"Group Practise"}
+        text2={"(773)123-4567"}
+        isSelected={false}
+        onCheckboxChange={function (): void {
+          throw new Error("Function not implemented.");
+        }}
+        onSmartCompareClick={function (): void {
+          throw new Error("Function not implemented.");
+        }}
+        onTierClick={function (): void {
+          throw new Error("Function not implemented.");
+        }}
+      ></ProviderDetailCard>
     </Grid>
   );
 }

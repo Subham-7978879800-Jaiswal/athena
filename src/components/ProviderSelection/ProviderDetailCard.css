@@ -1,0 +1,55 @@
+.card {
+    margin: 12px;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+}
+
+.buttons {
+    display: flex;
+    gap: 8px;
+}
+
+.smartCompareButton {
+    background-color: skyblue;
+    color: black;
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.tierButton {
+    background-color: yellow;
+    color: black;
+    border-radius: 30px;
+   
+}
+
+@media only screen and (max-width: 600px) {
+    .card {
+        margin: 6px;
+    }
+
+    .header {
+        margin-bottom: 6px;
+    }
+
+    .buttons {
+        gap: 4px;
+    }
+
+    .smartCompareButton {
+        width: 28px;
+        height: 28px;
+    }
+
+    .tierButton {
+        width: 28px;
+        height: 28px;
+    }
+}
