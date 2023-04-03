@@ -52,14 +52,15 @@ function ProviderSelectionDetail() {
             flexDirection: "row-reverse",
           }}
         >
+          <Typography component="h4" sx={{ fontWeight: 700, color: "#1E2F97" }}>
+            Group by facility
+          </Typography>
           <Switch
             checked={groupByFacility}
             onChange={handleGroupByFacilityChange}
             sx={{ marginLeft: 1 }}
           />
-          <Typography component="h4" sx={{ fontWeight: 700 }}>
-            Group by facility
-          </Typography>
+
           <Button
             sx={{ marginRight: "12px" }}
             variant="contained"
@@ -73,11 +74,57 @@ function ProviderSelectionDetail() {
       <Typography variant="subtitle1" marginTop={3}>
         Select one or multiple Providers to send to the Customer
       </Typography>
+
       <ProviderDetailCard
         name={"Catherine Jones"}
-        text1={"Group Practise"}
-        text2={"(773)123-4567"}
+        subtitle1={"Group Practise"}
+        subtitle2={"(773)123-4567"}
         isSelected={false}
+        facilityName={"Northwestern Hospital"}
+        facilityAddress={"Northwestern Hospital Address Long"}
+        distance={"0.6miles"}
+        speciality={"Orthopadeic Surgery"}
+        subSpeciality={"Knee Surgery"}
+        onCheckboxChange={function (): void {
+          throw new Error("Function not implemented.");
+        }}
+        onSmartCompareClick={function (): void {
+          throw new Error("Function not implemented.");
+        }}
+        onTierClick={function (): void {
+          throw new Error("Function not implemented.");
+        }}
+      ></ProviderDetailCard>
+      <ProviderDetailCard
+        name={"Catherine Jones"}
+        subtitle1={"Group Practise"}
+        subtitle2={"(773)123-4567"}
+        isSelected={false}
+        facilityName={"Northwestern Hospital"}
+        facilityAddress={"Northwestern Hospital Address Long"}
+        distance={"0.6miles"}
+        speciality={"Orthopadeic Surgery"}
+        subSpeciality={"Knee Surgery"}
+        onCheckboxChange={function (): void {
+          throw new Error("Function not implemented.");
+        }}
+        onSmartCompareClick={function (): void {
+          throw new Error("Function not implemented.");
+        }}
+        onTierClick={function (): void {
+          throw new Error("Function not implemented.");
+        }}
+      ></ProviderDetailCard>
+      <ProviderDetailCard
+        name={"Catherine Jones"}
+        subtitle1={"Group Practise"}
+        subtitle2={"(773)123-4567"}
+        isSelected={false}
+        facilityName={"Northwestern Hospital"}
+        facilityAddress={"Northwestern Hospital Address Long"}
+        distance={"0.6miles"}
+        speciality={"Orthopadeic Surgery"}
+        subSpeciality={"Knee Surgery"}
         onCheckboxChange={function (): void {
           throw new Error("Function not implemented.");
         }}

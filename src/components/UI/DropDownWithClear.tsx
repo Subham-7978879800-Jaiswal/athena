@@ -5,8 +5,7 @@ import { Typography, Box, InputAdornment, IconButton } from "@mui/material";
 import { Search } from "@mui/icons-material";
 import Autocomplete from "@mui/material/Autocomplete";
 
-import "./DropDownWithClear.css";
-import { useStore } from "../../../context/store";
+import { useStore } from "../../context/store";
 
 interface DropDownWithClearPropsType {
   dropdownOptions: any[];
@@ -48,7 +47,7 @@ function DropDownWithClear(props: DropDownWithClearPropsType) {
     setFilter("");
     closingTimeout = setTimeout(() => {
       setOpen(false);
-    }, 100);
+    }, 150);
   };
 
   const handleClear = () => {
@@ -59,6 +58,11 @@ function DropDownWithClear(props: DropDownWithClearPropsType) {
   useEffect(() => {
     if (value === "") handleClear();
   });
+
+  const searchClickHandler = () => {
+    setOpen(true);
+    clearTimeout(closingTimeout);
+  };
 
   return (
     <Box sx={{ position: "relative" }}>
@@ -106,6 +110,7 @@ function DropDownWithClear(props: DropDownWithClearPropsType) {
             return (
               <>
                 <li style={{ visibility: "hidden" }}>PLACE HODLER</li>
+                <li style={{ visibility: "hidden" }}>PLACE HODLER</li>
               </>
             );
           }
@@ -127,10 +132,7 @@ function DropDownWithClear(props: DropDownWithClearPropsType) {
           width: "100%",
           backgroundColor: "white",
         }}
-        onClick={() => {
-          setOpen(true);
-          clearTimeout(closingTimeout);
-        }}
+        onClick={searchClickHandler}
         onBlur={closeBlurHandler}
         onChange={(event: any) => {
           setFilter(event.target.value);
@@ -141,7 +143,7 @@ function DropDownWithClear(props: DropDownWithClearPropsType) {
         InputProps={{
           startAdornment: (
             <InputAdornment position="start">
-              <IconButton color="primary">
+              <IconButton onClick={searchClickHandler} color="primary">
                 <Search />
               </IconButton>
             </InputAdornment>

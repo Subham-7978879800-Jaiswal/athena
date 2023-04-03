@@ -3,7 +3,7 @@ import { useCallback, useState, useMemo } from "react";
 import { Box, Button, Grid, Typography } from "@mui/material";
 import Divider from "@mui/material/Divider";
 
-import DropdownWithClear from "../UI/DropDownWithClear/DropDownWithClear";
+import DropdownWithClear from "../UI/DropDownWithClear";
 import Tag from "../UI/Tag";
 
 import "./providerSearch.css";
@@ -176,7 +176,7 @@ function ProviderSearch() {
                 component="span"
                 sx={{ textTransform: "capitalize" }}
               >
-                Hide Filters
+                {showMoreFilter ? "Hide Filters" : "Show Filters"}
               </Typography>
             </Button>
           </Grid>

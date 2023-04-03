@@ -1,20 +1,32 @@
 import React, { FunctionComponent } from "react";
 import {
   Card as MUICard,
-  CardContent,
   Checkbox,
   Typography,
   Button,
+  Divider,
+  Grid,
 } from "@mui/material";
 import PeopleIcon from "@mui/icons-material/People";
 // import TierIcon from "@mui/icons-material/Tier";
 import "./ProviderDetailCard.css";
+import {
+  LocalHospitalOutlined,
+  LocalPharmacyOutlined,
+} from "@mui/icons-material";
+
+import SocialDistanceIcon from "@mui/icons-material/SocialDistance";
 
 type CardProps = {
   name: string;
-  text1: string;
-  text2: string;
+  subtitle1: string;
+  subtitle2: string;
+  facilityName: string;
   isSelected: boolean;
+  facilityAddress: string;
+  distance: string;
+  speciality: string;
+  subSpeciality: string;
   onCheckboxChange: () => void;
   onSmartCompareClick: () => void;
   onTierClick: () => void;
@@ -22,41 +34,57 @@ type CardProps = {
 
 const ProviderDetailCard: FunctionComponent<CardProps> = ({
   name,
-  text1,
-  text2,
-  isSelected,
+  subtitle1,
+  subtitle2,
   onCheckboxChange,
   onSmartCompareClick,
   onTierClick,
+  facilityName,
+  isSelected,
+  facilityAddress,
+  distance,
+  speciality,
+  subSpeciality,
 }) => {
   return (
-    <MUICard className="card">
-      <div className="header">
-        <div>
-          <div className="header">
-            <Checkbox checked={isSelected} onChange={onCheckboxChange} />
+    <MUICard sx={{ marginTop: "16px", padding: "12px" }}>
+      <div style={{ justifyContent: "space-between" }} className="d-flex">
+        <div className="d-flex">
+          <Checkbox sx={{ padding: "0px", marginRight: "12px" }} />
+          <div>
             <Typography variant="h5">{name}</Typography>
+            <Typography variant="body1" color="textSecondary" component="span">
+              {subtitle1} |
+            </Typography>
+            <Typography variant="body1" color="textSecondary" component="span">
+              {subtitle2}
+            </Typography>
           </div>
-          <Typography variant="body1" color="textSecondary" component="span">
-            {text1} |
-          </Typography>
-          <Typography variant="body1" color="textSecondary" component="span">
-            {text2}
-          </Typography>
         </div>
 
         <div className="buttons">
           <Button
-            variant="contained"
-            className="smartCompareButton"
+            sx={{
+              backgroundColor: "#0396d0",
+              color: "#000000",
+              borderRadius: " 30px",
+              display: "flex",
+              alignItems: "center",
+              gap: "8px",
+            }}
+            className="provider-smartCompareButton"
             onClick={onSmartCompareClick}
           >
             <PeopleIcon />
             Smart Compare
           </Button>
           <Button
-            variant="contained"
-            className="tierButton"
+            sx={{
+              backgroundColor: "#c5b614c4",
+              color: "#000000",
+              borderRadius: "30px",
+            }}
+            className="provider-tierButton"
             onClick={onTierClick}
           >
             {/* <TierIcon /> */}
@@ -64,7 +92,69 @@ const ProviderDetailCard: FunctionComponent<CardProps> = ({
           </Button>
         </div>
       </div>
-      <CardContent></CardContent>
+      <Divider sx={{ marginBottom: "12px" }} />
+      <Grid container>
+        <Grid item xs={4}>
+          <div className="d-flex">
+            <LocalHospitalOutlined
+              sx={{ padding: "0px", marginRight: "12px" }}
+            />
+            <div>
+              <Typography variant="body1" color="textSecondary" component="div">
+                Facility
+              </Typography>
+              <Typography sx={{ fontWeight: 700 }} component="div">
+                {facilityName}
+              </Typography>
+              <Typography variant="body1" color="textSecondary" component="div">
+                {facilityAddress}
+              </Typography>
+            </div>
+          </div>
+        </Grid>
+
+        <Grid item xs={2}>
+          <div className="d-flex">
+            <SocialDistanceIcon sx={{ padding: "0px", marginRight: "12px" }} />
+            <div>
+              <Typography variant="body1" color="textSecondary" component="div">
+                Distance
+              </Typography>
+              <Typography sx={{ fontWeight: 700 }} component="div">
+                {distance}
+              </Typography>
+            </div>
+          </div>
+        </Grid>
+        <Grid item>
+          <div className="d-flex">
+            <LocalHospitalOutlined
+              sx={{ padding: "0px", marginRight: "12px" }}
+            />
+            <div>
+              <Typography variant="body1" color="textSecondary" component="div">
+                Speciality
+              </Typography>
+              <Typography sx={{ fontWeight: 700 }} component="div">
+                {speciality}
+              </Typography>
+            </div>
+          </div>
+          <div className="d-flex">
+            <LocalPharmacyOutlined
+              sx={{ padding: "0px", marginRight: "12px" }}
+            />
+            <div>
+              <Typography variant="body1" color="textSecondary" component="div">
+                Sub Speciality
+              </Typography>
+              <Typography sx={{ fontWeight: 700 }} component="div">
+                {subSpeciality}
+              </Typography>
+            </div>
+          </div>
+        </Grid>
+      </Grid>
     </MUICard>
   );
 };
