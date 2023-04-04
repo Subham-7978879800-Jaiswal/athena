@@ -1,149 +1,193 @@
-import { Box, Button, Grid } from "@mui/material";
+import { useCallback, useState, useMemo } from "react";
+
+import { Box, Button, Grid, Typography } from "@mui/material";
+import Divider from "@mui/material/Divider";
+
 import DropdownWithClear from "../UI/DropDownWithClear";
-import Dropdown from "../UI/DropDown";
-import { useStore } from "../../context/store";
-import { useState } from "react";
 import Tag from "../UI/Tag";
 
+import "./providerSearch.css";
+import { useStore } from "../../context/store";
+
+const FilterSelector = ({ changeHandler }: any) => {
+  const { providerSearchFilter, resetFilters } = useStore();
+  return (
+    <Grid sx={{ margin: "24px", marginLeft: "0px" }}>
+      <div style={{ display: "flex" }}>
+        {Object.entries(providerSearchFilter).map(([key, value]) => (
+          <Tag tag={value} tagName={key} changeHandler={changeHandler}></Tag>
+        ))}
+
+        <Button
+          sx={{ height: "40px" }}
+          size="small"
+          onClick={resetFilters}
+          color="secondary"
+        >
+          <Typography component="span" className="button-text ">
+            Clear All Filters
+          </Typography>
+        </Button>
+      </div>
+    </Grid>
+  );
+};
+
 function ProviderSearch() {
-  const options = [
-    { label: "Amadeus", value: 1984 },
-    { label: "Mockingbird", value: 1962 },
-    { label: "Toy Story", value: 2010 },
-    { label: "Logan", value: 2017 },
-    { label: "Full Metal", value: 1987 },
-    { label: "Dangal", value: 2016 },
-    { label: "The Sting", value: 1973 },
-    { label: "2001: A Space", value: 1968 },
-    { label: "Singin' in", value: 1952 },
-    { label: "Toy Story", value: 1995 },
-    { label: "Bicycle", value: 1948 },
-    { label: "The Kid", value: 1921 },
-    { label: "Inglourious", value: 2009 },
-    { label: "Snatch", value: 2000 },
-    { label: "3 Idiots", value: 2009 },
-    { label: "Monty Python", value: 1975 },
-  ];
+  const options = useMemo(() => {
+    return [
+      { label: "Amadeus", value: 1984 },
+      { label: "Mockingbird", value: 1962 },
+      { label: "Toy Story", value: 2010 },
+      { label: "Logan", value: 2017 },
+      { label: "Full Metal", value: 1987 },
+      { label: "Dangal", value: 2016 },
+      { label: "The Sting", value: 1973 },
+      { label: "2001: A Space", value: 1968 },
+      { label: "Singin' in", value: 1952 },
+      { label: "Bicycle", value: 1948 },
+      { label: "The Kid", value: 1921 },
+      { label: "Inglourious", value: 2009 },
+      { label: "Snatch", value: 2000 },
+      { label: "3 Idiots", value: 2009 },
+      { label: "Monty Python", value: 1975 },
+    ];
+  }, []);
+  const DropdownWithClearOptions = options;
 
   const [showMoreFilter, setShowMoreFilter] = useState(false);
 
-  const { updateProviderSearchFilter, providerSearchFilter, resetFilters } =
-    useStore();
+  const { updateProviderSearchFilter, providerSearchFilter } = useStore();
 
-  const changeHandler = (data: Object[]) => {
+  const changeHandler = useCallback((data: Object[]) => {
     updateProviderSearchFilter(data);
-  };
+  }, []);
   return (
     <>
-      <h2 style={{ marginLeft: "24px", marginBottom: "48px" }}>
-        Find a Provider
-      </h2>
-      <Box sx={{ margin: "24px" }}>
-        <Grid container sx={{ marginLeft: "0px" }} spacing={3} columns={12}>
-          <Grid container spacing={3} xs={10}>
+      <h2 className="header-style">Find a Provider</h2>
+      <Box className="divider-style">
+        <Divider />
+      </Box>
+      <Box sx={{ marginLeft: "24px" }}>
+        <Grid
+          container
+          sx={{ marginLeft: "0px", width: "unset", marginTop: "0px" }}
+          spacing={3}
+          columns={12}
+        >
+          <Grid container sx={{ width: "unset" }} spacing={3} xs={11}>
             <Grid item md={3} xs={6}>
               <DropdownWithClear
                 fieldLabel={"Distance From member"}
-                options={options}
+                clostButtonReq={true}
+                dropdownOptions={options}
                 changeHandler={changeHandler}
                 fieldName={"distanceFromMember"}
+                value={providerSearchFilter.distanceFromMember}
               ></DropdownWithClear>
             </Grid>
             <Grid item md={3} xs={6}>
               <DropdownWithClear
+                clostButtonReq={true}
                 fieldLabel={"Speciality"}
-                options={options}
+                dropdownOptions={options}
                 changeHandler={changeHandler}
                 fieldName={"speciality"}
+                value={providerSearchFilter.speciality}
               ></DropdownWithClear>
             </Grid>
             <Grid item md={3} xs={6}>
-              <Dropdown
+              <DropdownWithClear
                 fieldLabel={"Sub-Speciality"}
-                options={options}
+                dropdownOptions={options}
                 changeHandler={changeHandler}
                 fieldName={"subSpeciality"}
-              ></Dropdown>
+                value={providerSearchFilter.subSpeciality}
+              ></DropdownWithClear>
             </Grid>
             <Grid item md={3} xs={6}>
-              <Dropdown
+              <DropdownWithClear
                 fieldLabel={"Procedure Category"}
-                options={options}
+                dropdownOptions={options}
                 changeHandler={changeHandler}
                 fieldName={"procedureCategory"}
-              ></Dropdown>
+                value={providerSearchFilter.procedureCategory}
+              ></DropdownWithClear>
             </Grid>
             {showMoreFilter && (
               <>
-                <Grid sx={{ flexGrow: 1 }} item>
+                <Grid className="flex-grow-1" item>
                   <DropdownWithClear
                     fieldLabel={"Conditions Addressed"}
-                    options={options}
+                    dropdownOptions={options}
                     changeHandler={changeHandler}
                     fieldName={"conditionsAddressed"}
+                    value={providerSearchFilter.conditionsAddressed}
                   ></DropdownWithClear>
                 </Grid>
-                <Grid sx={{ flexGrow: 1 }} item>
+                <Grid className="flex-grow-1" item>
                   <DropdownWithClear
                     fieldLabel={"Facility Type"}
-                    options={options}
+                    dropdownOptions={options}
                     changeHandler={changeHandler}
                     fieldName={"facilityType"}
+                    value={providerSearchFilter.facilityType}
                   ></DropdownWithClear>
                 </Grid>
-                <Grid sx={{ flexGrow: 1 }} item>
-                  <Dropdown
+                <Grid className="flex-grow-1" item>
+                  <DropdownWithClear
                     fieldLabel={"Preferred Gender"}
-                    options={options}
+                    dropdownOptions={options}
                     changeHandler={changeHandler}
                     fieldName={"preferredGender"}
-                  ></Dropdown>
+                    value={providerSearchFilter.preferredGender}
+                  ></DropdownWithClear>
                 </Grid>
-                <Grid sx={{ flexGrow: 1 }} item>
-                  <Dropdown
+                <Grid className="flex-grow-1" item>
+                  <DropdownWithClear
                     fieldLabel={"Languages Spoken"}
-                    options={options}
+                    dropdownOptions={options}
                     changeHandler={changeHandler}
                     fieldName={"languagesSpoken"}
-                  ></Dropdown>
+                    value={providerSearchFilter.languagesSpoken}
+                  ></DropdownWithClear>
                 </Grid>
-                <Grid sx={{ flexGrow: 1 }} item>
-                  <Dropdown
+                <Grid className="flex-grow-1" item>
+                  <DropdownWithClear
                     fieldLabel={"Provider Type"}
-                    options={options}
+                    dropdownOptions={options}
                     changeHandler={changeHandler}
                     fieldName={"providerType"}
-                  ></Dropdown>
+                    value={providerSearchFilter.providerType}
+                  ></DropdownWithClear>
                 </Grid>
               </>
             )}
           </Grid>
-          <Grid item xs={2}>
+          <Grid item xs={1} className="button-container">
             <Button
+              sx={{ height: "40px" }}
+              size="small"
               onClick={() => setShowMoreFilter((prev) => !prev)}
               variant="contained"
             >
-              Hide Filters
+              <Typography
+                variant="button"
+                component="span"
+                sx={{ textTransform: "capitalize" }}
+              >
+                {showMoreFilter ? "Hide Filters" : "Show Filters"}
+              </Typography>
             </Button>
           </Grid>
         </Grid>
-        <Grid sx={{ margin: "24px", marginLeft: "0px" }}>
-          <div style={{ display: "flex" }}>
-            {Object.entries(providerSearchFilter).map(([key, value]) => (
-              <Tag
-                tag={value}
-                tagName={key}
-                changeHandler={changeHandler}
-              ></Tag>
-            ))}
-            <Tag
-              tag={"Cancel All Filters"}
-              tagName={""}
-              changeHandler={changeHandler}
-              cancelAllFilter={true}
-            ></Tag>
-          </div>
-        </Grid>
+      </Box>
+      <Box className="divider-style">
+        <Divider />
+      </Box>
+
+      <Box className="margin-left-24">
+        <FilterSelector changeHandler={changeHandler}></FilterSelector>
       </Box>
     </>
   );

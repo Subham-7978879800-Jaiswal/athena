@@ -1,23 +1,37 @@
 import React, { useContext, useState } from "react";
 
+const ProviderSearchInitial = {
+  distanceFromMember: "",
+  speciality: "",
+  subSpeciality: "",
+  procedureCategory: "",
+  conditionsAddressed: "",
+  facilityType: "",
+  preferredGender: "",
+  languagesSpoken: "",
+  providerType: "",
+};
+
 const Store = React.createContext({
-  providerSearchFilter: {},
+  providerSearchFilter: ProviderSearchInitial,
   updateProviderSearchFilter: (data: Object) => {},
   resetFilters: () => {},
 });
 
 const StoreProvider = ({ children }: any) => {
-  const [providerSearchFilter, setProviderSearchFilter] = useState<Object>({});
+  const [providerSearchFilter, setProviderSearchFilter] = useState(
+    ProviderSearchInitial
+  );
 
   const updateProviderSearchFilter = (data: Object) => {
     console.log(data);
-    setProviderSearchFilter((prev: Object) => {
+    setProviderSearchFilter((prev: any) => {
       return { ...prev, ...data };
     });
   };
 
   const resetFilters = () => {
-    setProviderSearchFilter({});
+    setProviderSearchFilter(ProviderSearchInitial);
   };
 
   return (
