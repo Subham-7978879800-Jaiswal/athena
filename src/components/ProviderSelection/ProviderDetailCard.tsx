@@ -14,43 +14,52 @@ import {
   LocalHospitalOutlined,
   LocalPharmacyOutlined,
 } from "@mui/icons-material";
+import GroupIcon from "@mui/icons-material/Group";
 
 import SocialDistanceIcon from "@mui/icons-material/SocialDistance";
 
 type CardProps = {
+  value: Object;
   name: string;
   subtitle1: string;
   subtitle2: string;
   facilityName: string;
-  isSelected: boolean;
+  smartCompare: boolean;
   facilityAddress: string;
   distance: string;
   speciality: string;
   subSpeciality: string;
-  onCheckboxChange: () => void;
-  onSmartCompareClick: () => void;
-  onTierClick: () => void;
+  onCheckBoxClick: (event: any) => void;
 };
 
 const ProviderDetailCard: FunctionComponent<CardProps> = ({
+  value,
   name,
   subtitle1,
   subtitle2,
-  onCheckboxChange,
-  onSmartCompareClick,
-  onTierClick,
   facilityName,
-  isSelected,
+  smartCompare,
   facilityAddress,
   distance,
   speciality,
   subSpeciality,
+  onCheckBoxClick,
 }) => {
   return (
-    <MUICard sx={{ marginTop: "16px", padding: "12px" }}>
+    <MUICard
+      sx={{
+        boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.2)",
+        marginTop: "16px",
+        padding: "12px",
+      }}
+    >
       <div style={{ justifyContent: "space-between" }} className="d-flex">
         <div className="d-flex">
-          <Checkbox sx={{ padding: "0px", marginRight: "12px" }} />
+          <Checkbox
+            value={value}
+            onChange={onCheckBoxClick}
+            sx={{ padding: "0px", marginRight: "12px" }}
+          />
           <div>
             <Typography variant="h5">{name}</Typography>
             <Typography variant="body1" color="textSecondary" component="span">
@@ -63,31 +72,36 @@ const ProviderDetailCard: FunctionComponent<CardProps> = ({
         </div>
 
         <div className="buttons">
+          {smartCompare && (
+            <Button
+              sx={{
+                "&:hover": { backgroundColor: "#0396d0" },
+                backgroundColor: "#0396d0",
+                color: "#ffffff",
+                borderRadius: " 30px",
+                display: "flex",
+                alignItems: "center",
+                gap: "8px",
+                textTransform: "none",
+              }}
+              className="provider-smartCompareButton"
+            >
+              <PeopleIcon />
+              Smart Compare
+            </Button>
+          )}
           <Button
             sx={{
-              backgroundColor: "#0396d0",
-              color: "#000000",
-              borderRadius: " 30px",
-              display: "flex",
-              alignItems: "center",
-              gap: "8px",
-            }}
-            className="provider-smartCompareButton"
-            onClick={onSmartCompareClick}
-          >
-            <PeopleIcon />
-            Smart Compare
-          </Button>
-          <Button
-            sx={{
-              backgroundColor: "#c5b614c4",
+              "&:hover": { backgroundColor: "#ffee33c4" },
+              backgroundColor: "#ffee33c4",
               color: "#000000",
               borderRadius: "30px",
+              textTransform: "none",
+              gap: "8px",
             }}
             className="provider-tierButton"
-            onClick={onTierClick}
           >
-            {/* <TierIcon /> */}
+            <GroupIcon />
             Tier
           </Button>
         </div>

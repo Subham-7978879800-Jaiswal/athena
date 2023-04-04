@@ -6,18 +6,35 @@ import ProviderDetailCard from "./ProviderDetailCard";
 
 function ProviderSelectionDetail() {
   const [results, setResults] = useState<number>(258);
-  const [groupByFacility, setGroupByFacility] = useState<boolean>(false);
+  const [checkedValuesMap, setCheckedValuesMap] = useState(new Map());
 
-  const handleGroupByFacilityChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setGroupByFacility(event.target.checked);
+  const onCheckBoxClick = (event: any) => {
+    const newCheckedValuesMap = new Map(checkedValuesMap);
+    const { checked, value } = event.target;
+    const valueObj = JSON.parse(value);
+
+    if (checked && valueObj.id && valueObj.value) {
+      newCheckedValuesMap.set(valueObj.id, valueObj.value);
+    } else if (valueObj.id) {
+      newCheckedValuesMap.set(valueObj.id, "");
+    }
+
+    setCheckedValuesMap(newCheckedValuesMap);
   };
+
+  console.log(checkedValuesMap);
+
+  const mockData = [
+    { value: "card1", id: "1" },
+    { value: "card2", id: "2" },
+    { value: "card3", id: "3" },
+  ];
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     // Your code to handle the search query
   };
+
   return (
     <Grid xs={9} sx={{ paddingRight: "24px" }}>
       <Typography variant="h4" fontWeight="bold" marginBottom={2}>
@@ -55,17 +72,13 @@ function ProviderSelectionDetail() {
           <Typography component="h4" sx={{ fontWeight: 700, color: "#1E2F97" }}>
             Group by facility
           </Typography>
-          <Switch
-            checked={groupByFacility}
-            onChange={handleGroupByFacilityChange}
-            sx={{ marginLeft: 1 }}
-          />
+          <Switch sx={{ marginLeft: 1 }} />
 
           <Button
             sx={{ marginRight: "12px" }}
             variant="contained"
             type="submit"
-            startIcon={<SendIcon />}
+            startIcon={<SendIcon sx={{ tranform: "rotateZ(-45deg" }} />}
           >
             Send
           </Button>
@@ -74,67 +87,21 @@ function ProviderSelectionDetail() {
       <Typography variant="subtitle1" marginTop={3}>
         Select one or multiple Providers to send to the Customer
       </Typography>
-
-      <ProviderDetailCard
-        name={"Catherine Jones"}
-        subtitle1={"Group Practise"}
-        subtitle2={"(773)123-4567"}
-        isSelected={false}
-        facilityName={"Northwestern Hospital"}
-        facilityAddress={"Northwestern Hospital Address Long"}
-        distance={"0.6miles"}
-        speciality={"Orthopadeic Surgery"}
-        subSpeciality={"Knee Surgery"}
-        onCheckboxChange={function (): void {
-          throw new Error("Function not implemented.");
-        }}
-        onSmartCompareClick={function (): void {
-          throw new Error("Function not implemented.");
-        }}
-        onTierClick={function (): void {
-          throw new Error("Function not implemented.");
-        }}
-      ></ProviderDetailCard>
-      <ProviderDetailCard
-        name={"Catherine Jones"}
-        subtitle1={"Group Practise"}
-        subtitle2={"(773)123-4567"}
-        isSelected={false}
-        facilityName={"Northwestern Hospital"}
-        facilityAddress={"Northwestern Hospital Address Long"}
-        distance={"0.6miles"}
-        speciality={"Orthopadeic Surgery"}
-        subSpeciality={"Knee Surgery"}
-        onCheckboxChange={function (): void {
-          throw new Error("Function not implemented.");
-        }}
-        onSmartCompareClick={function (): void {
-          throw new Error("Function not implemented.");
-        }}
-        onTierClick={function (): void {
-          throw new Error("Function not implemented.");
-        }}
-      ></ProviderDetailCard>
-      <ProviderDetailCard
-        name={"Catherine Jones"}
-        subtitle1={"Group Practise"}
-        subtitle2={"(773)123-4567"}
-        isSelected={false}
-        facilityName={"Northwestern Hospital"}
-        facilityAddress={"Northwestern Hospital Address Long"}
-        distance={"0.6miles"}
-        speciality={"Orthopadeic Surgery"}
-        subSpeciality={"Knee Surgery"}
-        onCheckboxChange={function (): void {
-          throw new Error("Function not implemented.");
-        }}
-        onSmartCompareClick={function (): void {
-          throw new Error("Function not implemented.");
-        }}
-        onTierClick={function (): void {
-          throw new Error("Function not implemented.");
-        }}
-      ></ProviderDetailCard>
+      {mockData.map((data) => (
+        <ProviderDetailCard
+          onCheckBoxClick={onCheckBoxClick}
+          value={JSON.stringify(data)}
+          name={"Catherine Jones"}
+          subtitle1={"Group Practise"}
+          subtitle2={"(773)123-4567"}
+          facilityName={"Northwestern Hospital"}
+          facilityAddress={"Northwestern Hospital Address Long"}
+          distance={"0.6miles"}
+          smartCompare={true}
+          speciality={"Orthopadeic Surgery"}
+          subSpeciality={"Knee Surgery"}
+        ></ProviderDetailCard>
+      ))}
     </Grid>
   );
 }
