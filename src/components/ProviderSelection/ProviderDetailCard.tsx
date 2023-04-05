@@ -53,14 +53,18 @@ const ProviderDetailCard: FunctionComponent<CardProps> = ({
         padding: "12px",
       }}
     >
-      <div style={{ justifyContent: "space-between" }} className="d-flex">
-        <div className="d-flex">
+      <Grid
+        container
+        style={{ justifyContent: "space-between" }}
+        className="d-flex"
+      >
+        <Grid xs={12} sm={6} item className="d-flex">
           <Checkbox
             value={value}
             onChange={onCheckBoxClick}
             sx={{ padding: "0px", marginRight: "12px" }}
           />
-          <div>
+          <Grid>
             <Typography variant="h5">{name}</Typography>
             <Typography variant="body1" color="textSecondary" component="span">
               {subtitle1} |
@@ -68,10 +72,16 @@ const ProviderDetailCard: FunctionComponent<CardProps> = ({
             <Typography variant="body1" color="textSecondary" component="span">
               {subtitle2}
             </Typography>
-          </div>
-        </div>
+          </Grid>
+        </Grid>
 
-        <div className="buttons">
+        <Grid
+          sx={{ justifyContent: "flex-end" }}
+          xs={12}
+          md={6}
+          item
+          className="buttons"
+        >
           {smartCompare && (
             <Button
               sx={{
@@ -104,11 +114,11 @@ const ProviderDetailCard: FunctionComponent<CardProps> = ({
             <GroupIcon />
             Tier
           </Button>
-        </div>
-      </div>
+        </Grid>
+      </Grid>
       <Divider sx={{ marginBottom: "12px" }} />
       <Grid container>
-        <Grid item xs={4}>
+        <Grid item xs={12} sm={4}>
           <div className="d-flex">
             <LocalHospitalOutlined
               sx={{ padding: "0px", marginRight: "12px" }}
@@ -127,7 +137,7 @@ const ProviderDetailCard: FunctionComponent<CardProps> = ({
           </div>
         </Grid>
 
-        <Grid item xs={2}>
+        <Grid item xs={12} sm={2}>
           <div className="d-flex">
             <SocialDistanceIcon sx={{ padding: "0px", marginRight: "12px" }} />
             <div>

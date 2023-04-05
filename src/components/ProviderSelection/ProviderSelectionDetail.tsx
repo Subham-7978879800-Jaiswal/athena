@@ -11,12 +11,11 @@ function ProviderSelectionDetail() {
   const onCheckBoxClick = (event: any) => {
     const newCheckedValuesMap = new Map(checkedValuesMap);
     const { checked, value } = event.target;
-    const valueObj = JSON.parse(value);
 
-    if (checked && valueObj.id && valueObj.value) {
-      newCheckedValuesMap.set(valueObj.id, valueObj.value);
-    } else if (valueObj.id) {
-      newCheckedValuesMap.set(valueObj.id, "");
+    if (checked) {
+      newCheckedValuesMap.set(value, 1);
+    } else if (value) {
+      newCheckedValuesMap.set(value, "");
     }
 
     setCheckedValuesMap(newCheckedValuesMap);
@@ -36,7 +35,7 @@ function ProviderSelectionDetail() {
   };
 
   return (
-    <Grid xs={9} sx={{ paddingRight: "24px" }}>
+    <Grid xs={12} sm={9} sx={{ paddingRight: "24px" }}>
       <Typography variant="h4" fontWeight="bold" marginBottom={2}>
         {results} results
       </Typography>
@@ -44,7 +43,7 @@ function ProviderSelectionDetail() {
         Only in-network and accepting new patients
       </Typography>
       <Grid container>
-        <Grid xs={12} md={4}>
+        <Grid sx={{ marginBottom: "24px" }} xs={12} md={5}>
           <form
             style={{ width: "100%", height: "40px" }}
             onSubmit={handleSubmit}
@@ -62,7 +61,7 @@ function ProviderSelectionDetail() {
 
         <Grid
           xs={12}
-          md={8}
+          md={7}
           style={{
             display: "flex",
             alignItems: "center",
@@ -73,7 +72,6 @@ function ProviderSelectionDetail() {
             Group by facility
           </Typography>
           <Switch sx={{ marginLeft: 1 }} />
-
           <Button
             sx={{ marginRight: "12px" }}
             variant="contained"
@@ -87,10 +85,10 @@ function ProviderSelectionDetail() {
       <Typography variant="subtitle1" marginTop={3}>
         Select one or multiple Providers to send to the Customer
       </Typography>
-      {mockData.map((data) => (
+      {mockData.map((data, index) => (
         <ProviderDetailCard
           onCheckBoxClick={onCheckBoxClick}
-          value={JSON.stringify(data)}
+          value={index}
           name={"Catherine Jones"}
           subtitle1={"Group Practise"}
           subtitle2={"(773)123-4567"}

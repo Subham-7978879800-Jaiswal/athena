@@ -75,8 +75,8 @@ function ProviderSearch() {
           spacing={3}
           columns={12}
         >
-          <Grid container sx={{ width: "unset" }} spacing={3} xs={11}>
-            <Grid item md={3} xs={6}>
+          <Grid container sx={{ width: "unset" }} spacing={3} xs={12} sm={10}>
+            <Grid item md={3} sm={6} xs={12}>
               <DropdownWithClear
                 fieldLabel={"Distance From member"}
                 clostButtonReq={true}
@@ -86,7 +86,7 @@ function ProviderSearch() {
                 value={providerSearchFilter.distanceFromMember}
               ></DropdownWithClear>
             </Grid>
-            <Grid item md={3} xs={6}>
+            <Grid item md={3} sm={6} xs={12}>
               <DropdownWithClear
                 clostButtonReq={true}
                 fieldLabel={"Speciality"}
@@ -96,7 +96,7 @@ function ProviderSearch() {
                 value={providerSearchFilter.speciality}
               ></DropdownWithClear>
             </Grid>
-            <Grid item md={3} xs={6}>
+            <Grid item md={3} sm={6} xs={12}>
               <DropdownWithClear
                 fieldLabel={"Sub-Speciality"}
                 dropdownOptions={options}
@@ -105,7 +105,7 @@ function ProviderSearch() {
                 value={providerSearchFilter.subSpeciality}
               ></DropdownWithClear>
             </Grid>
-            <Grid item md={3} xs={6}>
+            <Grid item md={3} sm={6} xs={12}>
               <DropdownWithClear
                 fieldLabel={"Procedure Category"}
                 dropdownOptions={options}
@@ -116,7 +116,7 @@ function ProviderSearch() {
             </Grid>
             {showMoreFilter && (
               <>
-                <Grid className="flex-grow-1" item>
+                <Grid className="flex-grow-1" item md={3} sm={6} xs={12}>
                   <DropdownWithClear
                     fieldLabel={"Conditions Addressed"}
                     dropdownOptions={options}
@@ -125,7 +125,7 @@ function ProviderSearch() {
                     value={providerSearchFilter.conditionsAddressed}
                   ></DropdownWithClear>
                 </Grid>
-                <Grid className="flex-grow-1" item>
+                <Grid className="flex-grow-1" item md={3} sm={6} xs={12}>
                   <DropdownWithClear
                     fieldLabel={"Facility Type"}
                     dropdownOptions={options}
@@ -134,7 +134,7 @@ function ProviderSearch() {
                     value={providerSearchFilter.facilityType}
                   ></DropdownWithClear>
                 </Grid>
-                <Grid className="flex-grow-1" item>
+                <Grid className="flex-grow-1" item md={2} sm={6} xs={12}>
                   <DropdownWithClear
                     fieldLabel={"Preferred Gender"}
                     dropdownOptions={options}
@@ -143,7 +143,7 @@ function ProviderSearch() {
                     value={providerSearchFilter.preferredGender}
                   ></DropdownWithClear>
                 </Grid>
-                <Grid className="flex-grow-1" item>
+                <Grid className="flex-grow-1" item md={2} sm={6} xs={12}>
                   <DropdownWithClear
                     fieldLabel={"Languages Spoken"}
                     dropdownOptions={options}
@@ -152,7 +152,7 @@ function ProviderSearch() {
                     value={providerSearchFilter.languagesSpoken}
                   ></DropdownWithClear>
                 </Grid>
-                <Grid className="flex-grow-1" item>
+                <Grid className="flex-grow-1" item md={2} sm={6} xs={12}>
                   <DropdownWithClear
                     fieldLabel={"Provider Type"}
                     dropdownOptions={options}
@@ -164,7 +164,7 @@ function ProviderSearch() {
               </>
             )}
           </Grid>
-          <Grid item xs={1} className="button-container">
+          <Grid item xs={12} sm={2} className="button-container">
             <Button
               sx={{ height: "40px" }}
               size="small"
@@ -174,7 +174,11 @@ function ProviderSearch() {
               <Typography
                 variant="button"
                 component="span"
-                sx={{ textTransform: "capitalize" }}
+                sx={{
+                  textTransform: "capitalize",
+                  padding: "1rem",
+                  fontSize: "14px",
+                }}
               >
                 {showMoreFilter ? "Hide Filters" : "Show Filters"}
               </Typography>
