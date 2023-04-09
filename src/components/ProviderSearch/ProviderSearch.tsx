@@ -53,7 +53,6 @@ function ProviderSearch() {
       { label: "Monty Python", value: 1975 },
     ];
   }, []);
-  const DropdownWithClearOptions = options;
 
   const [showMoreFilter, setShowMoreFilter] = useState(false);
 
@@ -75,7 +74,13 @@ function ProviderSearch() {
           spacing={3}
           columns={12}
         >
-          <Grid container sx={{ width: "unset" }} spacing={3} xs={12} sm={10}>
+          <Grid
+            container
+            spacing={3}
+            xs={12}
+            sm={10}
+            sx={{ paddingTop: "0px", paddingLeft: "0px", width: "unset" }}
+          >
             <Grid item md={3} sm={6} xs={12}>
               <DropdownWithClear
                 fieldLabel={"Distance From member"}

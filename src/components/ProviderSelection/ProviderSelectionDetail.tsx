@@ -1,41 +1,82 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
-import { Typography, TextField, Button, Switch, Grid } from "@mui/material";
+import {
+  Typography,
+  TextField,
+  Button,
+  Switch,
+  Grid,
+  Pagination,
+} from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import SendIcon from "@mui/icons-material/Send";
 
 import ProviderDetailCard from "./ProviderDetailCard";
 import { darkBlue } from "../../colors";
+import { useStore } from "../../context/store";
+import { getMockData } from "../../MockData";
 
 function ProviderSelectionDetail() {
   const [results] = useState<number>(258);
   const [checkedValuesMap, setCheckedValuesMap] = useState(new Map());
+  const { availableProviders, updateAvailableProviders } = useStore();
+  const [page, setPage] = useState(1);
+  const [groupByFacilityChecked, setGroupByFacilityChecked] = useState(false);
+  const rowsPerPage = 8;
 
   const onCheckBoxClick = (event: any) => {
     const newCheckedValuesMap = new Map(checkedValuesMap);
-    const { checked, value } = event.target;
+    const { checked } = event.target;
+    const value = event.currentTarget.getAttribute("data-value");
 
     if (checked) {
       newCheckedValuesMap.set(value, 1);
     } else if (value) {
-      newCheckedValuesMap.set(value, "");
+      newCheckedValuesMap.set(value, 0);
     }
 
     setCheckedValuesMap(newCheckedValuesMap);
   };
 
-  console.log(checkedValuesMap);
-
-  const mockData = [
-    { value: "card1", id: "1" },
-    { value: "card2", id: "2" },
-    { value: "card3", id: "3" },
-  ];
-
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     // Your code to handle the search query
   };
+
+  const getProviders = (value: number) => {
+    if (!availableProviders[value * rowsPerPage]) {
+      const newProviderData = getMockData(value);
+      updateAvailableProviders(newProviderData);
+    }
+  };
+  const handleChange = (event: any, value: any) => {
+    setPage(value);
+    getProviders(value);
+  };
+
+  const handleSendButtonClick = () => {
+    console.log(checkedValuesMap);
+  };
+
+  const groupByFacility = (data: any) => {
+    if (groupByFacilityChecked) {
+      data.sort((a: any, b: any) => {
+        if (a.facilityName > b.facilityName) {
+          return 1;
+        } else if (a.facilityName < b.facilityName) {
+          return -1;
+        } else {
+          return 0;
+        }
+      });
+    }
+
+    return data;
+  };
+
+  useEffect(() => {
+    getProviders(page);
+  });
 
   return (
     <Grid xs={12} sm={9} sx={{ paddingRight: "24px" }}>
@@ -77,8 +118,15 @@ function ProviderSelectionDetail() {
           >
             Group by facility
           </Typography>
-          <Switch sx={{ marginLeft: 1 }} />
+          <Switch
+            checked={groupByFacilityChecked}
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+              setGroupByFacilityChecked(event.target.checked);
+            }}
+            sx={{ marginLeft: 1 }}
+          />
           <Button
+            onClick={handleSendButtonClick}
             sx={{ marginRight: "12px" }}
             variant="contained"
             type="submit"
@@ -91,21 +139,37 @@ function ProviderSelectionDetail() {
       <Typography variant="subtitle1" marginTop={3}>
         Select one or multiple Providers to send to the Customer
       </Typography>
-      {mockData.map((data, index) => (
+      {groupByFacility(
+        availableProviders.slice(
+          page * rowsPerPage,
+          page * rowsPerPage + rowsPerPage
+        )
+      ).map((data: Record<string, string>, index: number) => (
         <ProviderDetailCard
+          key={(page - 1) * rowsPerPage + index}
           onCheckBoxClick={onCheckBoxClick}
-          value={index}
-          name={"Catherine Jones"}
-          subtitle1={"Group Practise"}
-          subtitle2={"(773)123-4567"}
-          facilityName={"Northwestern Hospital"}
-          facilityAddress={"Northwestern Hospital Address Long"}
-          distance={"0.6miles"}
-          smartCompare={true}
-          speciality={"Orthopadeic Surgery"}
-          subSpeciality={"Knee Surgery"}
+          checkedValuesMap={checkedValuesMap}
+          value={(page - 1) * rowsPerPage + index}
+          name={data.name}
+          subtitle1={data.subtitle1}
+          subtitle2={data.subtitle2}
+          facilityName={data.facilityName}
+          facilityAddress={data.facilityAddress}
+          distance={data.distance}
+          smartCompare={Boolean(data.smartCompare)}
+          speciality={data.speciality}
+          subSpeciality={data.subSpeciality}
         ></ProviderDetailCard>
       ))}
+      <Pagination
+        sx={{ marginTop: "24px", justifyContent: "center", display: "flex" }}
+        count={3}
+        color="secondary"
+        variant="outlined"
+        shape="rounded"
+        page={page}
+        onChange={handleChange}
+      />
     </Grid>
   );
 }
