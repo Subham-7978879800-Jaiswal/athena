@@ -24,7 +24,6 @@ const StoreProvider = ({ children }: any) => {
   );
 
   const updateProviderSearchFilter = (data: Object) => {
-    console.log(data);
     setProviderSearchFilter((prev: any) => {
       return { ...prev, ...data };
     });

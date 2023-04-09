@@ -17,6 +17,7 @@ import {
 import GroupIcon from "@mui/icons-material/Group";
 
 import SocialDistanceIcon from "@mui/icons-material/SocialDistance";
+import { black, lightBlue, white, yellow } from "../../colors";
 
 type CardProps = {
   value: Object;
@@ -85,9 +86,9 @@ const ProviderDetailCard: FunctionComponent<CardProps> = ({
           {smartCompare && (
             <Button
               sx={{
-                "&:hover": { backgroundColor: "#0396d0" },
-                backgroundColor: "#0396d0",
-                color: "#ffffff",
+                "&:hover": { backgroundColor: `${lightBlue}` },
+                backgroundColor: `${lightBlue}`,
+                color: `${white}`,
                 borderRadius: " 30px",
                 display: "flex",
                 alignItems: "center",
@@ -102,9 +103,9 @@ const ProviderDetailCard: FunctionComponent<CardProps> = ({
           )}
           <Button
             sx={{
-              "&:hover": { backgroundColor: "#ffee33c4" },
-              backgroundColor: "#ffee33c4",
-              color: "#000000",
+              "&:hover": { backgroundColor: `${yellow}` },
+              backgroundColor: `${yellow}`,
+              color: `${black}`,
               borderRadius: "30px",
               textTransform: "none",
               gap: "8px",

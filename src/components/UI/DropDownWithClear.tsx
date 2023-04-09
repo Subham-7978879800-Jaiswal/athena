@@ -1,11 +1,11 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 
 import TextField from "@mui/material/TextField";
 import { Typography, Box, InputAdornment, IconButton } from "@mui/material";
 import { Search } from "@mui/icons-material";
 import Autocomplete from "@mui/material/Autocomplete";
 
-import { useStore } from "../../context/store";
+import { white } from "../../colors";
 
 interface DropDownWithClearPropsType {
   dropdownOptions: any[];
@@ -26,11 +26,8 @@ function DropDownWithClear(props: DropDownWithClearPropsType) {
     clostButtonReq = false,
   } = props;
 
-  const { providerSearchFilter } = useStore();
-
   const [open, setOpen] = useState(false);
   const [filter, setFilter] = useState("");
-  const autocompleteRef = useRef<any>(null);
 
   const sb = { label: "Search" };
 
@@ -130,7 +127,7 @@ function DropDownWithClear(props: DropDownWithClearPropsType) {
           position: "absolute",
           zIndex: 100000,
           width: "100%",
-          backgroundColor: "white",
+          backgroundColor: `${white}`,
         }}
         onClick={searchClickHandler}
         onBlur={closeBlurHandler}

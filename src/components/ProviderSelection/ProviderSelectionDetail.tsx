@@ -1,11 +1,14 @@
 import React, { useState } from "react";
+
 import { Typography, TextField, Button, Switch, Grid } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import SendIcon from "@mui/icons-material/Send";
+
 import ProviderDetailCard from "./ProviderDetailCard";
+import { darkBlue } from "../../colors";
 
 function ProviderSelectionDetail() {
-  const [results, setResults] = useState<number>(258);
+  const [results] = useState<number>(258);
   const [checkedValuesMap, setCheckedValuesMap] = useState(new Map());
 
   const onCheckBoxClick = (event: any) => {
@@ -68,7 +71,10 @@ function ProviderSelectionDetail() {
             flexDirection: "row-reverse",
           }}
         >
-          <Typography component="h4" sx={{ fontWeight: 700, color: "#1E2F97" }}>
+          <Typography
+            component="h4"
+            sx={{ fontWeight: 700, color: `${darkBlue}` }}
+          >
             Group by facility
           </Typography>
           <Switch sx={{ marginLeft: 1 }} />
